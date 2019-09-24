@@ -1,12 +1,19 @@
+sudo: required
 language: node_js
-
+node_js:
+- "12"
+cache:
+  directories:
+    - "node_modules"
 services:
   - docker
-
 before_install:
-  - docker build -t setheal/node-exercise .
-  - docker run setheal/node-exercise /bin/sh -c "npm run lint; npm test"
-
+  - docker build -t "$DOCKER_USERNAME"/node-exercise .
+script:
+  - npm run lint
+  - npm test
+  - npm run build
+  - docker images "$DOCKER_USERNAME"/node-exercise
 env:
   matrix:
     secure: ZlsA165XG+aXXag/aVwaQ2+OGxdgW45mPYYxN1lEPsm5o2thn7twmtK6k2KpH0lfOoO+YjeCMmn9n0+OIFnxpHKsCW8+xuSwe7nmP45K6FaNpdOvSDYS1sIDTGduI2KhyPElFcOXzkxOoTcwxCsJuN2LB0LnRwn+ITNUQWzd/bowyOZZWp6VqpbGysD8ZNSF89RtoD9+36HA4EOiS4ksPd6WpjyA7MzictORha6vxz+rpKmqe1TGT2EzkgcvXhh7z5mwrWCdhgxq4p0FdIJeCL1NTTkfkIGBe3ki77Nqs7R/EwXBiW10sxa6tUZlH1xquke6Z3PCRIf8bVkzOjYkiKZS809OAzg7zs+NbQkRyzSF216Fb0mQMVO41jyQrFnmz8BIJNy5wAuHsMfu19FRGtKvpmh4smI8JWEzIGZ8vIH9kkOiV0B0I3pjxzQpUhcrEXt+5oyMDBjiH1xxwRlhVPL6MOKCnUzTnaoaiHuozyDN4BIRp4ILB+HSUl4JtP0bAsQAsMKqOz4Ei/niwYuFuR0Zz5CRb40yM5il+moRa6rqATm56CrcLct9qDQRHwECVWOSNaxtr0PuOXVntCf4unWP7DUM+2i3A3/dgIcSK38atgpvvqwpiKD/eTkFCgyWPQW+gGGkKogRWVb9+X3fAxGRVGv4Ylnh9eA0/P2W7QY=
