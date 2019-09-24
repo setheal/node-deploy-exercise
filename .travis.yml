@@ -1,14 +1,12 @@
 language: node_js
 
-script:
-- npm run lint
-- npm test
-
 services:
   - docker
 
 before_install:
   - docker build -t setheal/node-exercise .
+  - docker run setheal/node-exercise /bin/sh -c "npm run lint; npm test"
+
 # deploy:
 #   provider: heroku
 #   api_key:
